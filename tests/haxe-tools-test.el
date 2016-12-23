@@ -1,7 +1,11 @@
 ;;; haxe-tools-test.el --- Tests for haxe-tools.el
 
+;; Copyright (C) 2016 Juan Karlo Lidudine
+
 ;;; Commentary:
+
 ;;; Code:
+
 (require 'ert)
 
 (ert-deftest t-haxe-tools-get-current-buffer-package-name()

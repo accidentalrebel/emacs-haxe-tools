@@ -1,6 +1,40 @@
-;;; haxe-tools.el --- Collection of code to help with haxe development
+;;; haxe-tools.el --- Collection of code to help with Haxe development
+
+;; Copyright (C) 2016 Juan Karlo Lidudine
+
+;; Author: Juan Karlo Licudine <karlo@accidentalrebel.com>
+;; URL: http://www.github.com/accidentalrebel/emacs-haxe-tools
+;; Package-Version: 20161223.01
+;; Version: 0.1.0
+;; Keywords: convenience, tools
+;; Package-Requires: ((emacs "24.4") (s "1.10.0"))
+
+;; This file is not part of GNU Emacs.
 
 ;;; Commentary:
+
+;; Collection of code to help with Haxe development on Emacs.
+
+;; Usage:
+
+;; (require 'haxe-tools) ;; unless installed as a package
+
+;;; License:
+
+;; This program is free software; you can redistributfe it and/or
+;; modify it under the terms of the GNU General Public License
+;; as published by the Free Software Foundation; either version 3
+;; of the License, or (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with GNU Emacs; see the file COPYING.  If not, write to the
+;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
 (require 's)
