@@ -44,7 +44,9 @@
 ;; Variable handler functions
 ;;
 (defun haxe-tools-add-as-private-class-variable()
-  "Gets the variable name at point and adds it as a class private variable."
+  "Gets the variable name at point and adds it as a class private variable.
+After adding the class variable, it positions the point so that you can easily specify the type of the variable.
+Use the command \"pop-global-mark\" afterwards to jump to the initial position."
   (interactive)
   (set-mark-command nil)
   (deactivate-mark)
@@ -54,8 +56,9 @@
     (search-backward-regexp "class " nil t)
     (forward-line 2)
     (open-line 1)
-    (insert (concat "var " wordAtPoint " : Class;"))
     (indent-for-tab-command)
+    (insert (concat "var " wordAtPoint " : ;"))
+    (backward-char)
     ))
 
 (defun haxe-tools-make-into-private-variable()
@@ -66,13 +69,14 @@ Use the command \"pop-global-mark\" afterwards to jump to the initial position."
         )
     (set-mark-command nil)
     (deactivate-mark)
-    (forward-line)
-    (newline)
+    (forward-line 2)
+    (open-line 1)
     (insert (concat "_" wordAtPoint " = " wordAtPoint ";"))
+    (indent-for-tab-command)
     (beginning-of-line)
     (back-to-indentation)
-    (haxe-tools-add-private-variable))
-  )
+    (haxe-tools-add-as-private-class-variable)
+    ))
 
 ;; Pagkage names handler functions
 ;;
