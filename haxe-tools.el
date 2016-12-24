@@ -53,10 +53,21 @@ Use the command \"pop-global-mark\" afterwards to jump to the initial position."
   (let ((wordAtPoint (thing-at-point 'word))
         )
     (search-backward-regexp "class " nil t)
-    (let ((private-var-declaration-point (re-search-forward "^[[:space:]]var .*;" nil t))
-          (public-var-declaration-point (re-search-forward "^[[:space:]]public var .*;" nil t)))
-      (cond (private-var-declaration-point
-             (beginning-of-line)
+    (haxe-tools-determine-where-to-place-class-variable)
+    (indent-for-tab-command)
+    (insert (concat "var " wordAtPoint " : ;"))
+    (backward-char)
+    ))
+
+(defun haxe-tools-determine-where-to-place-class-variable()
+  "Determines where to place the class variable."
+  (let ((private-var-declaration-point (re-search-forward "^[[:space:]]var .*;" nil t))
+        (public-var-declaration-point (re-search-forward "^[[:space:]]public var .*;" nil t)))
+    ;; 1. If there are private variables already declared, place the point before the first private variable declaration
+    ;; 2. Else if there are public variable declarations, place the point after the last public variable declaration
+    ;; 3. Else, add it as the first line of the class
+    (cond (private-var-declaration-point
+           (beginning-of-line)
              (open-line 1))
             (public-var-declaration-point
              (open-line 2)
@@ -66,11 +77,7 @@ Use the command \"pop-global-mark\" afterwards to jump to the initial position."
             (t
              (forward-line 2)
              (open-line 2)))
-      )
-    (indent-for-tab-command)
-    (insert (concat "var " wordAtPoint " : ;"))
-    (backward-char)
-    ))
+      ))
 
 (defun haxe-tools-make-into-private-variable()
   "Converts the function parameter with the format \"varName\" and turns it into a class private variable of format \"_varName\".
