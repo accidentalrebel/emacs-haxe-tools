@@ -48,7 +48,7 @@
        "        var _varName : ;\n\n"
        "function func(varName : Type)\n"
        "{\n"
-       "_varName = varName;\n"
+       "        _varName = varName;\n"
        "Test\n"
        "}")))))
 

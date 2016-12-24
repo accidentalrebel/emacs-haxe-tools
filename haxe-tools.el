@@ -77,8 +77,9 @@ Use the command \"pop-global-mark\" afterwards to jump to the initial position."
   (deactivate-mark)
   (forward-line 2)
   (open-line 1)
-  (insert (concat "_" stringToAdd " = " stringToAdd ";"))
   (beginning-of-line)
+  (indent-for-tab-command)
+  (insert (concat "_" stringToAdd " = " stringToAdd ";"))
   (back-to-indentation)
   (haxe-tools-add-string-as-private-class-variable (concat "_" stringToAdd)))
 
