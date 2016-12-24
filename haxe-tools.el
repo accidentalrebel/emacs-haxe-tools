@@ -43,12 +43,12 @@
 
 ;; Variable handler functions
 ;;
-(defun haxe-tools-add-as-private-class-variable()
+(defun haxe-tools-add-word-at-point-as-private-class-variable()
   "Gets the variable name at point and adds it as a class private variable.
 After adding the class variable, it positions the point so that you can easily specify the type of the variable.
 Use the command \"pop-global-mark\" afterwards to jump to the initial position."
   (interactive)
-  (haxe-tools-add-string-as-private-class-variable-with-point (thing-at-point 'word))
+  (haxe-tools-add-string-as-private-class-variable (thing-at-point 'word))
   )
 
 (defun haxe-tools-add-string-as-private-class-variable(stringToAdd)
@@ -63,22 +63,24 @@ Use the command \"pop-global-mark\" afterwards to jump to the initial position."
   (insert (concat "var " stringToAdd " : ;"))
   (backward-char))
 
-(defun haxe-tools-make-into-private-variable()
+(defun haxe-tools-make-word-at-point-into-private-class-variable()
   "Converts the function parameter with the format \"varName\" and turns it into a class private variable of format \"_varName\".
 Use the command \"pop-global-mark\" afterwards to jump to the initial position."
   (interactive)
-  (let ((wordAtPoint (thing-at-point 'word))
-        )
-    (set-mark-command nil)
-    (deactivate-mark)
-    (forward-line 2)
-    (open-line 1)
-    (insert (concat "_" wordAtPoint " = " wordAtPoint ";"))
-    (indent-for-tab-command)
-    (beginning-of-line)
-    (back-to-indentation)
-    (haxe-tools-add-as-private-class-variable)
-    ))
+  (haxe-tools-make-string-into-private-class-variable (thing-at-point 'word))
+  )
+
+(defun haxe-tools-make-string-into-private-class-variable(stringToAdd)
+  "Converts the given string into a private class variable.
+Use the command \"pop-global-mark\" afterwards to jump to the initial position."
+  (set-mark-command nil)
+  (deactivate-mark)
+  (forward-line 2)
+  (open-line 1)
+  (insert (concat "_" stringToAdd " = " stringToAdd ";"))
+  (beginning-of-line)
+  (back-to-indentation)
+  (haxe-tools-add-string-as-private-class-variable (concat "_" stringToAdd)))
 
 (defun haxe-tools-determine-where-to-place-class-variable()
   "Determines where to place the class variable."

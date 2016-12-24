@@ -12,7 +12,8 @@
   (with-temp-buffer
     (insert "class MyClass\n")
     (insert "{\n")
-    (insert "function func() {\n")
+    (insert "function func()\n")
+    (insert "{\n")
     (insert "var _varName;\n")
     (insert "}")
     (haxe-tools-add-string-as-private-class-variable "_varName")
@@ -23,8 +24,32 @@
        "class MyClass\n"
        "{\n"
        "        var _varName : ;\n\n"
-       "function func() {\n"
+       "function func()\n"
+       "{\n"
        "var _varName;\n"
+       "}")))))
+
+(ert-deftest t-haxe-tools-make-string-into-private-class-variable()
+  (with-temp-buffer
+    (insert "class MyClass\n")
+    (insert "{\n")
+    (insert "function func(varName : Type)\n")
+    (insert "{\n")
+    (insert "Test\n")
+    (insert "}")
+    (forward-line -3)
+    (haxe-tools-make-string-into-private-class-variable "varName")
+    (should
+     (equal
+      (buffer-string)
+      (concat
+       "class MyClass\n"
+       "{\n"
+       "        var _varName : ;\n\n"
+       "function func(varName : Type)\n"
+       "{\n"
+       "_varName = varName;\n"
+       "Test\n"
        "}")))))
 
 (ert-deftest t-haxe-tools-get-current-buffer-package-name()
