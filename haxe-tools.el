@@ -59,26 +59,6 @@ Use the command \"pop-global-mark\" afterwards to jump to the initial position."
     (backward-char)
     ))
 
-(defun haxe-tools-determine-where-to-place-class-variable()
-  "Determines where to place the class variable."
-  (let ((private-var-declaration-point (re-search-forward "^[[:space:]]var .*;" nil t))
-        (public-var-declaration-point (re-search-forward "^[[:space:]]public var .*;" nil t)))
-    ;; 1. If there are private variables already declared, place the point before the first private variable declaration
-    ;; 2. Else if there are public variable declarations, place the point after the last public variable declaration
-    ;; 3. Else, add it as the first line of the class
-    (cond (private-var-declaration-point
-           (beginning-of-line)
-             (open-line 1))
-            (public-var-declaration-point
-             (open-line 2)
-             (forward-line 2)
-             (beginning-of-line)
-             )
-            (t
-             (forward-line 2)
-             (open-line 2)))
-      ))
-
 (defun haxe-tools-make-into-private-variable()
   "Converts the function parameter with the format \"varName\" and turns it into a class private variable of format \"_varName\".
 Use the command \"pop-global-mark\" afterwards to jump to the initial position."
@@ -95,6 +75,27 @@ Use the command \"pop-global-mark\" afterwards to jump to the initial position."
     (back-to-indentation)
     (haxe-tools-add-as-private-class-variable)
     ))
+
+(defun haxe-tools-determine-where-to-place-class-variable()
+  "Determines where to place the class variable."
+  (let ((private-var-declaration-point (re-search-forward "^[[:space:]]var .*;" nil t))
+        (public-var-declaration-point (re-search-forward "^[[:space:]]public var .*;" nil t)))
+    ;; 1. If there are private variables already declared, place the point before the first private variable declaration
+    ;; 2. Else if there are public variable declarations, place the point after the last public variable declaration
+    ;; 3. Else, add it as the first line of the class
+    (cond (private-var-declaration-point
+           (beginning-of-line)
+             (open-line 1))
+            (public-var-declaration-point
+             (while (re-search-forward "^[[:space:]]public var .*;" nil t))
+             (open-line 2)
+             (forward-line 2)
+             (beginning-of-line)
+             )
+            (t
+             (forward-line 2)
+             (open-line 2)))
+      ))
 
 ;; Pagkage names handler functions
 ;;
