@@ -39,7 +39,43 @@
 ;;; Code:
 (require 's)
 (require 'subr-x)
+(require 'thingatpt)
 
+;; Variable handler functions
+;;
+(defun haxe-tools-add-as-private-class-variable()
+  "Gets the variable name at point and adds it as a class private variable."
+  (interactive)
+  (set-mark-command nil)
+  (deactivate-mark)
+  (let ((wordAtPoint (thing-at-point 'word))
+        )
+    (kill-new wordAtPoint)
+    (search-backward-regexp "class " nil t)
+    (forward-line 2)
+    (open-line 1)
+    (insert (concat "var " wordAtPoint " : Class;"))
+    (indent-for-tab-command)
+    ))
+
+(defun haxe-tools-make-into-private-variable()
+  "Converts the function parameter with the format \"varName\" and turns it into a class private variable of format \"_varName\".
+Use the command \"pop-global-mark\" afterwards to jump to the initial position."
+  (interactive)
+  (let ((wordAtPoint (thing-at-point 'word))
+        )
+    (set-mark-command nil)
+    (deactivate-mark)
+    (forward-line)
+    (newline)
+    (insert (concat "_" wordAtPoint " = " wordAtPoint ";"))
+    (beginning-of-line)
+    (back-to-indentation)
+    (haxe-tools-add-private-variable))
+  )
+
+;; Pagkage names handler functions
+;;
 (defun haxe-tools-get-current-buffer-package-name()
   "Gets the package of the current haxe-mode buffer. This is the line usually on the top of the page preceded by \"package\""
   (interactive)
