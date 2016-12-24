@@ -48,16 +48,20 @@
 After adding the class variable, it positions the point so that you can easily specify the type of the variable.
 Use the command \"pop-global-mark\" afterwards to jump to the initial position."
   (interactive)
+  (haxe-tools-add-string-as-private-class-variable-with-point (thing-at-point 'word))
+  )
+
+(defun haxe-tools-add-string-as-private-class-variable(stringToAdd)
+  "Adds the given string and makes it into a private class variable.
+After adding the class variable, it positions the point so that you can easily specify the type of the variable.
+Use the command \"pop-global-mark\" afterwards to jump to the initial position."
   (set-mark-command nil)
   (deactivate-mark)
-  (let ((wordAtPoint (thing-at-point 'word))
-        )
-    (search-backward-regexp "class " nil t)
-    (haxe-tools-determine-where-to-place-class-variable)
-    (indent-for-tab-command)
-    (insert (concat "var " wordAtPoint " : ;"))
-    (backward-char)
-    ))
+  (search-backward-regexp "class " nil t)
+  (haxe-tools-determine-where-to-place-class-variable)
+  (indent-for-tab-command)
+  (insert (concat "var " stringToAdd " : ;"))
+  (backward-char))
 
 (defun haxe-tools-make-into-private-variable()
   "Converts the function parameter with the format \"varName\" and turns it into a class private variable of format \"_varName\".

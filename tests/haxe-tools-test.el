@@ -8,6 +8,25 @@
 
 (require 'ert)
 
+(ert-deftest t-haxe-tools-add-string-as-private-class-variable()
+  (with-temp-buffer
+    (insert "class MyClass\n")
+    (insert "{\n")
+    (insert "function func() {\n")
+    (insert "var _varName;\n")
+    (insert "}")
+    (haxe-tools-add-string-as-private-class-variable "_varName")
+    (should
+     (equal
+      (buffer-string)
+      (concat
+       "class MyClass\n"
+       "{\n"
+       "        var _varName : ;\n\n"
+       "function func() {\n"
+       "var _varName;\n"
+       "}")))))
+
 (ert-deftest t-haxe-tools-get-current-buffer-package-name()
   ;; Initial test
   (with-temp-buffer
