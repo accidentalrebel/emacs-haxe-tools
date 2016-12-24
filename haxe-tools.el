@@ -53,12 +53,20 @@ Use the command \"pop-global-mark\" afterwards to jump to the initial position."
   (let ((wordAtPoint (thing-at-point 'word))
         )
     (search-backward-regexp "class " nil t)
-    (if (search-forward-regexp "^[[:space:]]var" nil t)
-        (progn
-          (beginning-of-line)
-          (open-line 1))
-      (forward-line 2)
-      (open-line 1))
+    (let ((private-var-declaration-point (re-search-forward "^[[:space:]]var .*;" nil t))
+          (public-var-declaration-point (re-search-forward "^[[:space:]]public var .*;" nil t)))
+      (cond (private-var-declaration-point
+             (beginning-of-line)
+             (open-line 1))
+            (public-var-declaration-point
+             (open-line 2)
+             (forward-line 2)
+             (beginning-of-line)
+             )
+            (t
+             (forward-line 2)
+             (open-line 2)))
+      )
     (indent-for-tab-command)
     (insert (concat "var " wordAtPoint " : ;"))
     (backward-char)
