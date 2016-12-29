@@ -52,24 +52,24 @@
        "Test\n"
        "}")))))
 
-(ert-deftest t-haxe-tools-get-current-buffer-package-name()
+(ert-deftest t-haxe-tools-get-current-buffer-package()
   ;; Initial test
   (with-temp-buffer
     (insert "package test.mypackage;\n")
     (should (equal
-             (haxe-tools-get-current-buffer-package-name) "test.mypackage")))
+             (haxe-tools-get-current-buffer-package) "test.mypackage")))
 
   ;; With a leading whitespace
   (with-temp-buffer
     (insert " package test.mypackage;\n")
     (should (equal
-             (haxe-tools-get-current-buffer-package-name) "test.mypackage")))
+             (haxe-tools-get-current-buffer-package) "test.mypackage")))
 
   ;; With a multiple levels
   (with-temp-buffer
     (insert "package test.test2.test3.mypackage;\n")
     (should (equal
-             (haxe-tools-get-current-buffer-package-name) "test.test2.test3.mypackage")))
+             (haxe-tools-get-current-buffer-package) "test.test2.test3.mypackage")))
 
   ;; With a package and import lines
   (with-temp-buffer
@@ -77,7 +77,7 @@
     (insert "\n")
     (insert "import haxe.EnumTools;\n")
     (should (equal
-             (haxe-tools-get-current-buffer-package-name) "test.mypackage")))
+             (haxe-tools-get-current-buffer-package) "test.mypackage")))
 
   ;; With blank spaces before the package line
   (with-temp-buffer
@@ -87,7 +87,7 @@
     (insert "\n")
     (insert "import haxe.EnumTools;\n")
     (should (equal
-             (haxe-tools-get-current-buffer-package-name) "test.mypackage")))
+             (haxe-tools-get-current-buffer-package) "test.mypackage")))
 
   ;; With the import statement before the package
   (with-temp-buffer
@@ -95,15 +95,15 @@
     (insert "\n")
     (insert "package test.mypackage;\n")
     (should (equal
-             (haxe-tools-get-current-buffer-package-name) "test.mypackage")))
+             (haxe-tools-get-current-buffer-package) "test.mypackage")))
   )
 
-(ert-deftest t-haxe-tools-put-current-buffer-package-name-to-clipboard()
+(ert-deftest t-haxe-tools-put-current-buffer-package-to-clipboard()
   (with-temp-buffer
     (insert "package test.mypackage;\n")
     (insert "\n")
     (insert "import haxe.EnumTools;\n")
-    (haxe-tools-put-current-buffer-package-name-to-clipboard)
+    (haxe-tools-put-current-buffer-package-to-clipboard)
     (should (equal
              (current-kill 0 1) "test.mypackage"))))
 

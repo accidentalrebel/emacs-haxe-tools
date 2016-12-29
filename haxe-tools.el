@@ -104,9 +104,9 @@ Use the command \"pop-global-mark\" afterwards to jump to the initial position."
              (open-line 2)))
       ))
 
-;; Pagkage names handler functions
+;; Pagkage handler functions
 ;;
-(defun haxe-tools-get-current-buffer-package-name()
+(defun haxe-tools-get-current-buffer-package()
   "Gets the package of the current haxe-mode buffer. This is the line usually on the top of the page preceded by \"package\""
   (interactive)
   (save-excursion
@@ -117,13 +117,13 @@ Use the command \"pop-global-mark\" afterwards to jump to the initial position."
       (when line
         (haxe-tools-extract-package-from-line line)))))
 
-(defun haxe-tools-put-current-buffer-package-name-to-clipboard()
+(defun haxe-tools-put-current-buffer-package-to-clipboard()
   "Gets the package of the current haxe-mode buffer and then puts it into the clipboard."
   (interactive)
-  (kill-new (haxe-tools-get-current-buffer-package-name)))
+  (kill-new (haxe-tools-get-current-buffer-package)))
 
 (defun haxe-tools-extract-package-from-line(line)
-  "Extracts the package name from the given line. For example, for \"package haxe.util\", \"haxe.util\" is returned."
+  "Extracts the package from the given line. For example, for \"package haxe.util\", \"haxe.util\" is returned."
   (cadr (s-match "package \\\(.*\\\);"
                  (string-trim line))))
 
