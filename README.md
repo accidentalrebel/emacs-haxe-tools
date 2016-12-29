@@ -15,8 +15,9 @@ Function | Use
 `haxe-tools-put-current-buffer-package-to-clipboard` | Gets the package of the current haxe-mode buffer and then puts it into the clipboard.
 More to be added! | 
 
-## Also check out
-[[https://github.com/accidentalrebel/emacs-haxe-imports][Emacs Haxe Imports]] - An emacs package I made which contains code dealing with Haxe imports based on [[http://www.github.com/dakrone/emacs-java-imports][java-imports]] by Matthew Lee Hinman.
+# Also check out
+
+* [Emacs Haxe Imports](https://github.com/accidentalrebel/emacs-haxe-imports) - An emacs package I made which contains code dealing with Haxe imports based on [java-imports](http://www.github.com/dakrone/emacs-java-imports) by Matthew Lee Hinman.
 
 # Contributions
 I am open to suggestions for any features that might be useful. Pull requests are also very welcome!
