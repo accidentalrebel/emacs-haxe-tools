@@ -123,9 +123,12 @@ Use the command \"pop-global-mark\" afterwards to jump to the initial position."
   (kill-new (haxe-tools-get-current-buffer-package)))
 
 (defun haxe-tools-extract-package-from-line(line)
-  "Extracts the package from the given line. For example, for \"package haxe.util\", \"haxe.util\" is returned."
-  (cadr (s-match "package \\\(.*\\\);"
-                 (string-trim line))))
+  "Extracts the package from the given line. For example, for \"package haxe.util;\", \"haxe.util\" is returned."
+  (let ((extracted (cadr (s-match "package \\\(.*\\\);"
+                                  (string-trim line)))))
+    (message "Extracted -> %s" extracted)
+    extracted
+    ))
 
 (provide 'haxe-tools)
 
