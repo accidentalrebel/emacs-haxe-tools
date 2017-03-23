@@ -14,6 +14,7 @@ Function | Use
 `haxe-tools-get-current-buffer-package` | Gets the package of the current haxe-mode buffer. This is the line usually on the top of the page preceded by "package"
 `haxe-tools-put-current-buffer-package-to-clipboard` | Gets the package of the current haxe-mode buffer and then puts it into the clipboard.
 More to be added! | 
+`haxe-tools-add-package-line-for-current-buffer | Add the package line to the top of the current buffer. |
 
 # Also check out
 

@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2016 Juan Karlo Lidudine
 
-;; Author: Juan Karlo Licudine <karlo@accidentalrebel.com>
+;; Author: Juan Karlo Licudine <accidentalrebel@gmail.com>
 ;; URL: http://www.github.com/accidentalrebel/emacs-haxe-tools
 ;; Package-Version: 20161223.01
 ;; Version: 0.1.0
@@ -37,6 +37,7 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
+(require 'f)
 (require 's)
 (require 'subr-x)
 (require 'thingatpt)
@@ -129,6 +130,26 @@ Use the command \"pop-global-mark\" afterwards to jump to the initial position."
     (message "Extracted -> %s" extracted)
     extracted
     ))
+
+(defun haxe-tools-add-package-line-for-current-buffer (project-root)
+  "Add the package line to the top of the current buffer.
+
+Uses the format \"package com.test.package;\".
+
+PROJECT-ROOT - The root of the current project. This directory string
+is stripped off from the current directory path of the current file.
+I suggest that you use projectile-project-root for this if you have
+projectile installed."
+  (message "Project root is  %s" project-root)
+  (let* ((current-directory (f-dirname buffer-file-name))
+	 (path-from-root (replace-regexp-in-string project-root "" current-directory))
+	 (package-line (replace-regexp-in-string "/" "." path-from-root))
+	 )
+    (goto-char (point-min))
+    (open-line 1)
+    (insert (concat "package " package-line ";"))
+    )
+  )
 
 (provide 'haxe-tools)
 
